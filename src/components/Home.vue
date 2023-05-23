@@ -1,6 +1,5 @@
 <template>
   <div class="top">
-    <h1>Home</h1>
     <app-grid></app-grid>
   </div>
 </template>

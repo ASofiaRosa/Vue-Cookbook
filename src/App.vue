@@ -13,6 +13,9 @@ export default {
   components: {
     appHeader: Header,
   },
+  created() {
+    this.$store.dispatch("getRecipies");
+  }
 }
 </script>
 

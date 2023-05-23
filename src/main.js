@@ -6,6 +6,7 @@ import "vuetify/dist/vuetify.min.css"
 import "material-design-icons-iconfont/dist/material-design-icons.css"
 import VueRouter from "vue-router"
 import { routes } from "./routes"
+import {store} from "./store/store"
 
 Vue.use(VueRouter)
 
@@ -17,4 +18,5 @@ new Vue({
   vuetify,
   render: (h) => h(App),
   router,
+  store,
 }).$mount("#app")

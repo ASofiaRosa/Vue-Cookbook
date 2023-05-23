@@ -7,23 +7,25 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
   state: {
     recipies: [],
+    addedRecipies:[],
+    numberSaved:0,
   },
 
   actions: {
     getRecipies({ commit }) {
-      client
-        .getEntries({
-          content_type: "blog",
-          // The following line orders the items per creation date:
-          order: "sys.createdAt",
-        })
-        .then((response) => {
-          commit("recipies", { recipies: response.items })
+        client
+      .getEntries({
+        content_type: "blog",
+        // The following line orders the items per creation date:
+        order: "sys.createdAt",
+      })
+      .then((response) => {
+        console.log(response.items)
+        commit("SET_RECIPIES", response.items)
+      })
+      .catch(console.error)
+  },
 
-          console.log(response.items)
-        })
-        .catch(console.error)
-    },
 
     addRecipie: ({ commit }, order) => {
       commit("ADD_RECIPIES", order)
@@ -31,12 +33,19 @@ export const store = new Vuex.Store({
   },
 
   mutations: {
-    SET_RECIPIES(state, { recipieId, recipieTitle, recipieFoto }) {
-      state.recipies.push({
+
+SET_RECIPIES(state, recipies) {
+  state.recipies = recipies
+},
+
+
+    ADD_RECIPIES(state, { recipieId, recipieTitle, recipieFoto }) {
+      state.addedRecipies.push({
         id: recipieId,
         title: recipieTitle,
         foto: recipieFoto,
       })
+      state.numberSaved += 1
     },
   },
 
@@ -45,13 +54,12 @@ export const store = new Vuex.Store({
       return state.recipies
     },
 
-    addedRecipies: (state, getters) => {
-      return state.recipies.map((recipie) => {
-        const record = getters.recipies.find(
-          (element) => element.sys.id == recipie.id
-        )
-        return { id: recipie.id, title: record.title, foto: record.foto }
-      })
+    addedRecipies: (state) => {
+      return state.addedRecipies
     },
+    numberSaved: (state) => {
+      return state.numberSaved
+    },
+
   },
 })

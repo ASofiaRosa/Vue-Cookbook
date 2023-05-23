@@ -27,11 +27,7 @@
 <script>
 export default {
   props: ["recipie"],
-  data() {
-    return {
-      imageurl: this.recipie.fields.image.fields.file.url,
-    }
-  },
+ 
   methods: {
     addRecipie() {
       const order = {
@@ -39,7 +35,8 @@ export default {
         recipieTitle: this.recipie.fields.title,
         recipieFoto: this.recipie.fields.image.fields.file.url,
       }
-      this.$store.dispatch("buyStock", order)
+      console.log(order)
+      this.$store.dispatch("addRecipie", order)
     },
   },
 }

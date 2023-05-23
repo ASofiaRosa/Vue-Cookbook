@@ -17,7 +17,6 @@
         {{ item }}
       </v-tab>
     </v-tabs>
-
     <v-tabs-items v-model="tab">
       <v-tab-item v-for="item2 in text" :key="item2">
         <v-card color="basil" flat>
@@ -25,10 +24,19 @@
         </v-card>
       </v-tab-item>
     </v-tabs-items>
+    <v-container class="top">
+    <v-row justify="space-around">
+    <appMiniCard v-for="recipie in recipies" :key="recipie.recipieId" :recipie="recipie"></appMiniCard>
+    </v-row>
+    </v-container>
   </v-card>
+  
 </template>
 
 <script>
+import {mapGetters} from "vuex"
+import MiniCard from "./MiniCard.vue";
+
 export default {
   data() {
     return {
@@ -37,6 +45,15 @@ export default {
       text: ["1", "2", "3", "4"],
     }
   },
+
+  computed: {
+    ...mapGetters({
+      recipies: "addedRecipies",
+    })
+  },
+  components: {
+    appMiniCard: MiniCard
+  }
 }
 </script>
 
